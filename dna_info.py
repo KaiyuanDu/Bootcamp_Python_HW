@@ -30,31 +30,38 @@ def encode_sequence(string):
 
     return dna_sequence
 
-    # Test the function
-encoded_sequence = encode_sequence("Frieza")
-print(encoded_sequence)
+
+#task 2 decoder
 
 
 def decode_sequence(dna_sequence):
     # Initialize an empty string to store the decoded text
     decoded_text = ""
 
-    # Iterate through the DNA sequence in chunks of 2
-    for i in range(0, len(dna_sequence), 2):
-        # Get the DNA base pair
-        dna_pair = dna_sequence[i:i + 2]
+    # Iterate through the DNA sequence in chunks of 4
+    for i in range(0, len(dna_sequence), 4):
+        # Get the DNA group of 4 bases
+        dna_group = dna_sequence[i:i + 4]
 
-        # Decode the DNA base pair into a character
-        if dna_pair == 'AA':
-            decoded_char = 'A'
-        elif dna_pair == 'AC':
-            decoded_char = 'C'
-        elif dna_pair == 'AG':
-            decoded_char = 'G'
-        else:
-            decoded_char = 'T'
+        # Decode the DNA group into a character
+        binary_value = ""
+        for base in dna_group:
+            if base == 'A':
+                binary_value += '00'
+            elif base == 'T':
+                binary_value += '01'
+            elif base == 'C':
+                binary_value += '10'
+            elif base == 'G':
+                binary_value += '11'
+            else:
+                # Handle unrecognized DNA base
+                raise ValueError("Unrecognized DNA base: " + base)
 
-        # Append the decoded character to the text
+        # Convert the binary value to ASCII and then to character
+        decoded_char = chr(int(binary_value, 2))
+
+        # Append the decoded character to the string
         decoded_text += decoded_char
 
     return decoded_text
