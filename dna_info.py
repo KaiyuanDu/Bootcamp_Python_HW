@@ -106,17 +106,28 @@ print("Decrypted:", decrypted_result)
 #task 4 synthesizer
 
 
+import random
+
 def synthesizer(sequence):
+    # Define the mapping of bases
+    base_mapping = {'A': ['A', 'C', 'G', 'T'],
+                    'C': ['C', 'A', 'T', 'G'],
+                    'G': ['G', 'T', 'C', 'A'],
+                    'T': ['T', 'G', 'A', 'C']}
+
+    # Initialize an empty string to store the synthesized DNA sequence
     synthesized_sequence = ""
+
+    # Iterate through each base in the input sequence
     for base in sequence:
-        # Introduce random errors with 10% probability
-        if random.random() < 0.1:
-            # Randomly select a different base
-            new_base = random.choice(['A', 'C', 'G', 'T'])
-            synthesized_sequence += new_base
-        else:
-            synthesized_sequence += base
+        # Randomly select a base from the mapping
+        synthesized_base = random.choice(base_mapping[base])
+
+        # Append the synthesized base to the output sequence
+        synthesized_sequence += synthesized_base
+
     return synthesized_sequence
+
 
 
 def error_count(seq1, seq2):
