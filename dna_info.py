@@ -15,21 +15,26 @@ def encode_sequence(string):
 
         # Use bitwise AND to keep only the last 2 bits
         base_index = ascii_value & 0b11
+        # Convert the ASCII value to binary representation
+        binary_value = bin(ascii_value)[2:].zfill(8)  # Convert to binary and fill with leading zeros
+        
 
-        # Define DNA bases corresponding to the last 2 bits
-        if base_index == 0:
-            dna_base = 'A'
-        elif base_index == 1:
-            dna_base = 'C'
-        elif base_index == 2:
-            dna_base = 'G'
-        else:
-            dna_base = 'T'
-
-        # Append the DNA base to the sequence
-        dna_sequence += dna_base
+       # Split the binary value into three parts and map each part to a DNA base
+        for i in range(0, 8, 3):
+            dna_triplet = binary_value[i:i+3]
+            if dna_triplet == '000':
+                dna_sequence += 'A'
+            elif dna_triplet == '001':
+                dna_sequence += 'C'
+            elif dna_triplet == '010':
+                dna_sequence += 'G'
+            else:
+                dna_sequence += 'T'
 
     return dna_sequence
+    # Test the function
+encoded_sequence = encode_sequence("Frieza")
+print(encoded_sequence)
 
 
 def decode_sequence(dna_sequence):
