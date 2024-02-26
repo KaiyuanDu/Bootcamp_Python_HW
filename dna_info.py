@@ -68,32 +68,39 @@ def decode_sequence(dna_sequence):
 
 
 #task 3 encryption
-def encrypt_decrypt(string, key='CAT'):
-    # Initialize an empty string to store the encrypted/decrypted sequence
-    result = ""
+def encrypt_decrypt(input_string, key='CAT'):
+    # Encrypt the input string using the XOR operation with the key
+    encrypted_sequence = encrypt_sequence(input_string, key)
+
+    # Decrypt the encrypted sequence using the same key
+    decrypted_sequence = encrypt_sequence(encrypted_sequence, key)
+
+    return encrypted_sequence, decrypted_sequence
+
+
+def encrypt_sequence(input_string, key):
+    # Initialize an empty string to store the encrypted sequence
+    encrypted_sequence = ""
 
     # Repeat the key to match the length of the input string
-    repeated_key = (key * ((len(string) // len(key)) + 1))[:len(string)]
+    repeated_key = (key * ((len(input_string) // len(key)) + 1))[:len(input_string)]
 
-    # Iterate through each character in the input string and perform XOR with the corresponding key character
-    for i in range(len(string)):
-        # Perform XOR operation between the ASCII values of the characters
-        encrypted_char = chr(ord(string[i]) ^ ord(repeated_key[i]))
+    # Iterate through each character in the input string
+    for i in range(len(input_string)):
+        # Apply XOR operation between the characters of input string and key
+        encrypted_char = chr(ord(input_string[i]) ^ ord(repeated_key[i]))
+
         # Append the result to the output string
-        result += encrypted_char
+        encrypted_sequence += encrypted_char
 
-    return result
+    return encrypted_sequence
 
 
-# Test the function with encryption
-input_string = "CGGC"
-key = "CAT"
-encrypted_sequence = encrypt_decrypt(input_string, key)
-print("Encrypted Sequence:", encrypted_sequence)  # Output: TAAT
+# Test the function
+encrypted_result, decrypted_result = encrypt_decrypt("CGGC")
+print("Encrypted:", encrypted_result)
+print("Decrypted:", decrypted_result)
 
-# Test the function with decryption
-decrypted_sequence = encrypt_decrypt(encrypted_sequence, key)
-print("Decrypted Sequence:", decrypted_sequence)  # Output: CGGC
 
 #task 4 synthesizer
 
