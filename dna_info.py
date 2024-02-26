@@ -68,6 +68,7 @@ def decode_sequence(dna_sequence):
 
 
 #task 3 encryption
+#task 3 encryption
 def encrypt_decrypt(input_string, key='CAT'):
     # Encrypt the input string using the XOR operation with the key
     encrypted_sequence = encrypt_sequence(input_string, key)
@@ -94,12 +95,16 @@ def encrypt_sequence(input_string, key):
         encrypted_sequence += encrypted_char
 
     return encrypted_sequence
-
-
+    
 # Test the function
-encrypted_result, decrypted_result = encrypt_decrypt("CGGC")
+encrypted_result, decrypted_result = encrypt_decrypt("TAAT")
 print("Encrypted:", encrypted_result)
 print("Decrypted:", decrypted_result)
+
+# Decrypt the encrypted sequence using the same key
+re_decrypted_result = encrypt_decrypt(encrypted_result)
+print("Re-decrypted:", re_decrypted_result[1])
+
 
 
 #task 4 synthesizer
