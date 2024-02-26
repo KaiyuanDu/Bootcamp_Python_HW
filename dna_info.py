@@ -6,7 +6,7 @@ import random
 
 def encode_sequence(string):
     # Initialize an empty string to store the DNA bases
-    dna_sequence: str = ""
+    dna_sequence = ""
 
     # Iterate through each character in the input string
     for char in string:
@@ -25,16 +25,16 @@ def encode_sequence(string):
             dna_base = 'G'
         else:
             dna_base = 'T'
+
         # Append the DNA base to the sequence
         dna_sequence += dna_base
+
     return dna_sequence
 
 
-#task 2 decoder
-#Define the decoder function
 def decode_sequence(dna_sequence):
     # Initialize an empty string to store the decoded text
-    decoded_text: str = ""
+    decoded_text = ""
 
     # Iterate through the DNA sequence in chunks of 2
     for i in range(0, len(dna_sequence), 2):
@@ -53,7 +53,8 @@ def decode_sequence(dna_sequence):
 
         # Append the decoded character to the text
         decoded_text += decoded_char
-        return decoded_text
+
+    return decoded_text
 
 
 #task 3 encryption
