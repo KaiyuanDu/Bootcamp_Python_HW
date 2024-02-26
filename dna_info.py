@@ -9,22 +9,16 @@ def encode_sequence(string):
     dna_sequence = ""
 
     # Iterate through each character in the input string
-    for char in string:
-        # Get the ASCII value of the character
-        ascii_value = ord(char)
-
-        # Use bitwise AND to keep only the last 2 bits
-        base_index = ascii_value & 0b11
-
-        # Define DNA bases corresponding to the last 2 bits
-        if base_index == 0:
-            dna_base = 'A'
-        elif base_index == 1:
-            dna_base = 'C'
-        elif base_index == 2:
-            dna_base = 'G'
-        else:
-            dna_base = 'T'
+    for i in range(0, 8, 2):
+            dna_pair = binary_value[i:i+2]
+            if dna_pair == '00':
+                dna_sequence += 'A'
+            elif dna_pair == '01':
+                dna_sequence += 'C'
+            elif dna_pair == '10':
+                dna_sequence += 'G'
+            else:
+                dna_sequence += 'T'
 
         # Append the DNA base to the sequence
         dna_sequence += dna_base
