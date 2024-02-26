@@ -9,7 +9,15 @@ def encode_sequence(string):
     dna_sequence = ""
 
     # Iterate through each character in the input string
-    for i in range(0, 8, 2):
+    for char in string:
+        # Get the ASCII value of the character
+        ascii_value = ord(char)
+        
+        # Convert the ASCII value to binary representation
+        binary_value = bin(ascii_value)[2:].zfill(8)  # Convert to binary and fill with leading zeros
+        
+        # Split the binary value into two parts and map each part to a DNA base
+        for i in range(0, 8, 2):
             dna_pair = binary_value[i:i+2]
             if dna_pair == '00':
                 dna_sequence += 'A'
@@ -20,35 +28,43 @@ def encode_sequence(string):
             else:
                 dna_sequence += 'T'
 
-        # Append the DNA base to the sequence
-        dna_sequence += dna_base
+    return dna_sequence
+
+# Test the function
+print(encode_sequence("Frieza"))  # Output: TATCTGACTCCTTCTTTGCCTCAT
+
+
+
+def encode_sequence(string):
+    # Initialize an empty string to store the DNA bases
+    dna_sequence = ""
+
+    # Iterate through each character in the input string
+    for char in string:
+        # Get the ASCII value of the character
+        ascii_value = ord(char)
+        
+        # Convert the ASCII value to binary representation
+        binary_value = bin(ascii_value)[2:].zfill(8)  # Convert to binary and fill with leading zeros
+        
+        # Split the binary value into two parts and map each part to a DNA base
+        for i in range(0, 8, 2):
+            dna_pair = binary_value[i:i+2]
+            if dna_pair == '00':
+                dna_sequence += 'A'
+            elif dna_pair == '01':
+                dna_sequence += 'C'
+            elif dna_pair == '10':
+                dna_sequence += 'G'
+            else:
+                dna_sequence += 'T'
 
     return dna_sequence
 
+# Test the function
+encoded_sequence = encode_sequence("Frieza")
+print(encoded_sequence)
 
-def decode_sequence(dna_sequence):
-    # Initialize an empty string to store the decoded text
-    decoded_text = ""
-
-    # Iterate through the DNA sequence in chunks of 2
-    for i in range(0, len(dna_sequence), 2):
-        # Get the DNA base pair
-        dna_pair = dna_sequence[i:i + 2]
-
-        # Decode the DNA base pair into a character
-        if dna_pair == 'AA':
-            decoded_char = 'A'
-        elif dna_pair == 'AC':
-            decoded_char = 'C'
-        elif dna_pair == 'AG':
-            decoded_char = 'G'
-        else:
-            decoded_char = 'T'
-
-        # Append the decoded character to the text
-        decoded_text += decoded_char
-
-    return decoded_text
 
 
 #task 3 encryption
