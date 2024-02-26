@@ -20,16 +20,16 @@ def encode_sequence(string):
         
 
        # Split the binary value into three parts and map each part to a DNA base
-        for i in range(0, 8, 3):
-            dna_triplet = binary_value[i:i+3]
-            if dna_triplet == '000':
+            for i in range(0, 8, 2):
+            dna_pair = binary_value[i:i + 2]
+            if dna_pair == '00':
                 dna_sequence += 'A'
-            elif dna_triplet == '001':
-                dna_sequence += 'C'
-            elif dna_triplet == '010':
-                dna_sequence += 'G'
-            else:
+            elif dna_pair == '01':
                 dna_sequence += 'T'
+            elif dna_pair == '10':
+                dna_sequence += 'C'
+            else:
+                dna_sequence += 'G'
 
     return dna_sequence
     # Test the function
