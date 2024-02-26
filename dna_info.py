@@ -13,14 +13,11 @@ def encode_sequence(string):
         # Get the ASCII value of the character
         ascii_value = ord(char)
 
-        # Use bitwise AND to keep only the last 2 bits
-        base_index = ascii_value & 0b11
         # Convert the ASCII value to binary representation
         binary_value = bin(ascii_value)[2:].zfill(8)  # Convert to binary and fill with leading zeros
-        
 
-       # Split the binary value into three parts and map each part to a DNA base
-            for i in range(0, 8, 2):
+        # Split the binary value into two parts and map each part to a DNA base
+        for i in range(0, 8, 2):
             dna_pair = binary_value[i:i + 2]
             if dna_pair == '00':
                 dna_sequence += 'A'
@@ -32,6 +29,7 @@ def encode_sequence(string):
                 dna_sequence += 'G'
 
     return dna_sequence
+
     # Test the function
 encoded_sequence = encode_sequence("Frieza")
 print(encoded_sequence)
