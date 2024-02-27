@@ -69,51 +69,40 @@ def decode_sequence(dna_sequence):
 
 def encrypt_decrypt(string, key="CAT"):
     bases = ('A', 'T', 'C', 'G')
-    # Checks if the key's length is 0. If so, end recursion
+    # If the length of the key is 0, terminate recursion
     if len(key) == 0:
-        # When base case is met, the encrypted/decrypted string
-        # is returned
+        # When the base case is reached, return the encrypted/decrypted string
         return string
 
     encrypted = ""
-    # Finds first letter of key and it's associated
-    # index in the tuple containing the 4 base pairs
+    # Determine the index of the first letter of the key in the bases
     key_index = bases.index(key[0])
 
-    # Iterates through the entire string to ensure each
-    # character is encrypted
+    # Iterate through the entire string to ensure each character is encrypted
     while len(string) > 0:
-        # Finds first letter of string and it's associated
-        # index in the tuple containing the 4 base pairs
+        # Determine the index of the first letter of the string in the bases
         string_index = bases.index(string[0])
-        # Use XOR operator to find new encrypted/decrypted
-        # character's associated index in the base pair tuple
+        # Use the XOR operator to find the new index associated with the encrypted/decrypted character in the bases
         index = string_index ^ key_index
-        # Constructs encrypted/decrypted string character-
-        # by-character
+        # Construct the encrypted/decrypted string character by character
         encrypted += bases[index]
-        # Updates string variable to change loop condition
+        # Update the string variable to change the loop condition
         string = string[1::]
 
-    # Method recursively calls itself until the key's length
-    # has reached 0
+    # The method recursively calls itself until the length of the key reaches 0
     return encrypt_decrypt(encrypted, key[1::])
 
 # Test the function
+
+
 encrypted_result = encrypt_decrypt("TAAT")
 print("Encrypted:", encrypted_result)
 
-# Decrypt the encrypted sequence using the same key
 decrypted_result = encrypt_decrypt(encrypted_result)
 print("Decrypted:", decrypted_result)
 
-
-
-
 #task 4 synthesizer
 
-
-import random
 
 def synthesizer(sequence):
     # Define the mapping of bases
@@ -128,10 +117,22 @@ def synthesizer(sequence):
     # Iterate through each base in the input sequence
     for base in sequence:
         # Randomly select a base from the mapping
-        synthesized_base = random.choice(base_mapping[base])
+        rand = random.random()
 
-        # Append the synthesized base to the output sequence
-        synthesized_sequence += synthesized_base
+        if base.__eq__('A'):
+            synthesized_sequence += 'A'
+        if base.__eq__('T'):
+            add = 'G' if rand < 0.02 else 'C' if rand < 0.05 \
+                else 'A' if rand < 0.10 else 'T'
+            synthesized_sequence += add
+        if base.__eq__('C'):
+            add = 'A' if rand < 0.01 else 'T' if rand < 0.02 \
+                else 'G' if rand < 0.03 else 'C'
+            synthesized_sequence += add
+        if base.__eq__('G'):
+            add = 'A' if rand < 0.01 else 'T' if rand < 0.03 \
+                else 'C' if rand < 0.05 else 'G'
+            synthesized_sequence += add
 
     return synthesized_sequence
 
@@ -141,11 +142,10 @@ def error_count(seq1, seq2):
     count = 0
     min_length = min(len(seq1), len(seq2))
     # Compare sequences letter by letter
-    for i in range(min_length):
-        if seq1[i] != seq2[i]:
+    for i in range(len(seq1)):
+        if not seq1[i].__eq__(seq2[i]):
             count += 1
     # Add the remaining characters if the sequences have different lengths
-    count += abs(len(seq1) - len(seq2))
     return count
 
 
