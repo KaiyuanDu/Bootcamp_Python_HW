@@ -68,37 +68,43 @@ def decode_sequence(dna_sequence):
 
 
 def encrypt_decrypt(input_string, key='CAT'):
-    # Encrypt the input string using the XOR operation with the key
-    encrypted_sequence = encrypt_sequence(input_string, key)
+    encrypted_sequence = ''  # Initialize an empty string to store the encrypted sequence
+    key_index = 0  # Initialize an index to keep track of the current character in the key
 
-    return encrypted_sequence
+    # Loop over each character in the input string
+    for char in input_string:
+        # Retrieve the current character from the key
+        key_char = key[key_index]
 
+        # Perform the XOR operation explicitly using four letters
+        # First XOR operation with 'C'
+        xor_result_1 = chr(((ord(char) - ord('A')) ^ (ord('C') - ord('A'))) + ord('A'))
 
-def encrypt_sequence(input_string, key):
-    # Initialize an empty string to store the encrypted sequence
-    encrypted_sequence = ""
+        # Second XOR operation with 'A'
+        xor_result_2 = chr(((ord(xor_result_1) - ord('A')) ^ (ord('A') - ord('A'))) + ord('A'))
 
-    # Repeat the key to match the length of the input string
-    repeated_key = (key * ((len(input_string) // len(key)) + 1))[:len(input_string)]
+        # Third XOR operation with 'T'
+        xor_result_3 = chr(((ord(xor_result_2) - ord('A')) ^ (ord('T') - ord('A'))) + ord('A'))
 
-    # Iterate through each character in the input string
-    for i in range(len(input_string)):
-        # Apply XOR operation between the characters of input string and key
-        encrypted_char = chr(ord(input_string[i]) ^ ord(repeated_key[i]))
+        # Append the result of the third XOR operation to the encrypted sequence
+        encrypted_sequence += xor_result_3
 
-        # Append the result to the output string
-        encrypted_sequence += encrypted_char
+        # Move to the next character in the key, looping back to the beginning if necessary
+        key_index = (key_index + 1) % len(key)
 
+    # Return the encrypted sequence
     return encrypted_sequence
 
 
 # Test the function
-encrypted_result = encrypt_decrypt("TAAT")
-print("Encrypted:", encrypted_result)
+input_string = "TAAT"
+key = "CAT"
+encrypted_message = encrypt_decrypt(input_string, key)
+print("Encrypted message:", encrypted_message)
 
-# Decrypt the encrypted sequence using the same key
-decrypted_result = encrypt_decrypt(encrypted_result)
-print("Decrypted:", decrypted_result)
+# Decrypting the message using the same function and key
+decrypted_message = encrypt_decrypt(encrypted_message, key)
+print("Decrypted message:", decrypted_message)
 
 
 
