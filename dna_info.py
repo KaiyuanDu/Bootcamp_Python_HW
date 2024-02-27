@@ -67,44 +67,45 @@ def decode_sequence(dna_sequence):
     return decoded_text
 
 
-def encrypt_decrypt(input_string, key='CAT'):
-    encrypted_sequence = ''  # Initialize an empty string to store the encrypted sequence
-    key_index = 0  # Initialize an index to keep track of the current character in the key
+def encrypt_decrypt(string, key="CAT"):
+    bases = ('A', 'T', 'C', 'G')
+    # Checks if the key's length is 0. If so, end recursion
+    if len(key) == 0:
+        # When base case is met, the encrypted/decrypted string
+        # is returned
+        return string
 
-    # Loop over each character in the input string
-    for char in input_string:
-        # Retrieve the current character from the key
-        key_char = key[key_index]
+    encrypted = ""
+    # Finds first letter of key and it's associated
+    # index in the tuple containing the 4 base pairs
+    key_index = bases.index(key[0])
 
-        # Perform the XOR operation explicitly using four letters
-        # First XOR operation with 'C'
-        xor_result_1 = chr(((ord(char) - ord('A')) ^ (ord('C') - ord('A'))) + ord('A'))
+    # Iterates through the entire string to ensure each
+    # character is encrypted
+    while len(string) > 0:
+        # Finds first letter of string and it's associated
+        # index in the tuple containing the 4 base pairs
+        string_index = bases.index(string[0])
+        # Use XOR operator to find new encrypted/decrypted
+        # character's associated index in the base pair tuple
+        index = string_index ^ key_index
+        # Constructs encrypted/decrypted string character-
+        # by-character
+        encrypted += bases[index]
+        # Updates string variable to change loop condition
+        string = string[1::]
 
-        # Second XOR operation with 'A'
-        xor_result_2 = chr(((ord(xor_result_1) - ord('A')) ^ (ord('A') - ord('A'))) + ord('A'))
-
-        # Third XOR operation with 'T'
-        xor_result_3 = chr(((ord(xor_result_2) - ord('A')) ^ (ord('T') - ord('A'))) + ord('A'))
-
-        # Append the result of the third XOR operation to the encrypted sequence
-        encrypted_sequence += xor_result_3
-
-        # Move to the next character in the key, looping back to the beginning if necessary
-        key_index = (key_index + 1) % len(key)
-
-    # Return the encrypted sequence
-    return encrypted_sequence
-
+    # Method recursively calls itself until the key's length
+    # has reached 0
+    return encrypt_decrypt(encrypted, key[1::])
 
 # Test the function
-input_string = "TAAT"
-key = "CAT"
-encrypted_message = encrypt_decrypt(input_string, key)
-print("Encrypted message:", encrypted_message)
+encrypted_result = encrypt_decrypt("TAAT")
+print("Encrypted:", encrypted_result)
 
-# Decrypting the message using the same function and key
-decrypted_message = encrypt_decrypt(encrypted_message, key)
-print("Decrypted message:", decrypted_message)
+# Decrypt the encrypted sequence using the same key
+decrypted_result = encrypt_decrypt(encrypted_result)
+print("Decrypted:", decrypted_result)
 
 
 
