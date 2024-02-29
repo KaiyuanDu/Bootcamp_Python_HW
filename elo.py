@@ -3,14 +3,10 @@
 
 import csv
 import numpy as np
-import math
 
 def calculate_ratings(past_matches_filename):
-    # Initialize list to store player ratings
-    player_ratings = [1500] * 8  # Initialize all players with a rating of 1500
-
-    # Convert player_ratings list to integers
-    player_ratings = [int(rating) for rating in player_ratings]
+    # Initialize dictionary to store player ratings
+    player_ratings = {0: 1500, 1: 1500, 2: 1500, 3: 1500, 4: 1500, 5: 1500, 6: 1500, 7: 1500}
 
     # Constant for Elo rating calculation
     c = 100
@@ -37,7 +33,6 @@ def calculate_ratings(past_matches_filename):
                 elif winner_idx == player_b_idx:
                     player_ratings[player_a_idx] += 5 * (0.0 - prob_a_wins)
                     player_ratings[player_b_idx] += 5 * (1.0 - prob_b_wins)
-                player_ratings = math.floor(player_ratings)
     except Exception as e:
         print("Error:", e)
         print("Failed to read the input file.")
