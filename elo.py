@@ -1,9 +1,11 @@
-# project 4 kdu5
-# Task 1: Calculate player ratings based on past matches.
-
+#project 4 kdu5
 import csv
 import numpy as np
+import matplotlib.pyplot as plt
+import math
+import random
 
+# Task 1: Calculate player ratings based on past matches.
 def calculate_ratings(past_matches_filename):
     # Initialize dictionary to store player ratings
     player_ratings = {0: 1500, 1: 1500, 2: 1500, 3: 1500, 4: 1500, 5: 1500, 6: 1500, 7: 1500}
@@ -40,11 +42,7 @@ def calculate_ratings(past_matches_filename):
 
     return player_ratings
 
-
 # Task 2: Display player ratings in a bar chart.
-
-import matplotlib.pyplot as plt
-
 def display_ratings(player_ratings):
     # Extract player names and ratings from the dictionary
     players = list(player_ratings.keys())
@@ -66,10 +64,6 @@ def display_ratings(player_ratings):
     plt.savefig('projections.pdf')
 
 # Task 3: Simulate matches and project win probabilities.
-
-import math
-import random
-
 def calculate_win_probability(rating_A, rating_B, c):
     delta = (rating_A - rating_B) / c
     return math.exp(delta) / (1 + math.exp(delta))
@@ -113,6 +107,7 @@ def project_win_probs(player_ratings, c=400, n=100):
 
     return win_probabilities
 
+# Task 4: Display win probabilities in a pie chart and save to file.
 def display_probs(win_probabilities):
     # Sort win probabilities in descending order
     sorted_probs = sorted(win_probabilities.items(), key=lambda x: x[1], reverse=True)
@@ -127,6 +122,7 @@ def display_probs(win_probabilities):
     # Generate pie chart and save it to projections_pie.pdf
     labels = [f'Player {player}' for player, _ in sorted_probs]
     probabilities = [prob for _, prob in sorted_probs]
+    plt.figure(figsize=(8, 8))
     plt.pie(probabilities, labels=labels, autopct='%1.1f%%')
     plt.title('Tournament Win Probabilities')
     plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
