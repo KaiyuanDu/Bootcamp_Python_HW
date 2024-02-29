@@ -28,7 +28,8 @@ def calculate_ratings(past_matches_filename):
                 delta = (player_ratings[player_a] - player_ratings[player_b]) / 100
 
                 # Calculate probabilities of player A and B winning
-                prob_a_wins = 1 / (1 + 10 ** (-delta))
+                delta = (player_ratings[player_a] - player_ratings[player_b]) / c
+                prob_a_wins = 1 / (1 + np.exp(-delta))
                 prob_b_wins = 1 - prob_a_wins
 
                 # Update player ratings based on match outcome
