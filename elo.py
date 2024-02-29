@@ -68,6 +68,7 @@ def display_ratings(player_ratings):
 # Task 3: Simulate matches and project win probabilities.
 
 import math
+import random
 
 def calculate_win_probability(rating_A, rating_B, c):
     delta = (rating_A - rating_B) / c
@@ -103,9 +104,15 @@ def project_win_probs(player_ratings, c=400, n=100):
 
         # Increment win count for the winner of the simulated tournament
         winner = next_round[0]
-        win_probabilities[winner] += 1 / n
+        win_probabilities[winner] += 1
+
+    # Convert win counts to probabilities
+    total_simulations = n
+    for player, wins in win_probabilities.items():
+        win_probabilities[player] = wins / total_simulations
 
     return win_probabilities
+
 
 
 # Task 4: Display projected win probabilities in a pie chart.
@@ -117,23 +124,18 @@ def display_probs(win_probabilities):
     # Sort win probabilities in descending order
     sorted_probs = sorted(win_probabilities.items(), key=lambda x: x[1], reverse=True)
 
-    # Write sorted probabilities to probs.csv
+    # Write win probabilities to probs.csv
     with open('probs.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(['Player', 'Probability'])
         for player, prob in sorted_probs:
             writer.writerow([player, prob])
 
-    # Plot pie chart and save to projections_pie.pdf
+    # Generate pie chart and save it to projections_pie.pdf
     labels = [f'Player {player}' for player, _ in sorted_probs]
-    sizes = [prob for _, prob in sorted_probs]
-
-    plt.figure(figsize=(8, 8))
-    plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=140)
-    plt.title('Player Win Probabilities')
+    probabilities = [prob for _, prob in sorted_probs]
+    plt.pie(probabilities, labels=labels, autopct='%1.1f%%')
+    plt.title('Tournament Win Probabilities')
     plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-    plt.tight_layout()
     plt.savefig('projections_pie.pdf')
-
-    # Show the pie chart
     plt.show()
