@@ -67,25 +67,19 @@ def display_ratings(player_ratings):
 
 # Task 3: Simulate matches and project win probabilities.
 
-import numpy as np
+import math
 
-def simulate_match(player_ratings, player_a, player_b):
-    # Calculate delta for Elo rating calculation
-    delta = (player_ratings[player_a] - player_ratings[player_b]) / 100
+def calculate_win_probability(rating_A, rating_B, c):
+    delta = (rating_A - rating_B) / c
+    return math.exp(delta) / (1 + math.exp(delta))
 
-    # Calculate win probability for player A
-    prob_a_wins = np.exp(delta) / (1 + np.exp(delta))
+def simulate_match(player_ratings, player_A, player_B, c):
+    rating_A = player_ratings[player_A]
+    rating_B = player_ratings[player_B]
+    prob_A = calculate_win_probability(rating_A, rating_B, c)
+    return player_A if random.random() < prob_A else player_B
 
-    # Generate a random number in [0.0, 1.0)
-    random_num = np.random.rand()
-
-    # Determine the winner based on the random number and win probability
-    if random_num < prob_a_wins:
-        return player_a
-    else:
-        return player_b
-
-def project_win_probs(player_ratings, n=100):
+def project_win_probs(player_ratings, c=400, n=100):
     # Initialize dictionary to store win probabilities for each player
     win_probabilities = {player: 0 for player in player_ratings.keys()}
 
@@ -101,7 +95,7 @@ def project_win_probs(player_ratings, n=100):
 
             # Simulate matches in the current round
             for match in matches_in_round:
-                winner = simulate_match(simulated_ratings, match[0], match[1])
+                winner = simulate_match(simulated_ratings, match[0], match[1], c)
                 next_round[match[0] // 2] = winner
 
             # Update simulated ratings with winners for the next round
@@ -112,6 +106,7 @@ def project_win_probs(player_ratings, n=100):
         win_probabilities[winner] += 1 / n
 
     return win_probabilities
+
 
 # Task 4: Display projected win probabilities in a pie chart.
 
