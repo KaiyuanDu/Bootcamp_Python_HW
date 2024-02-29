@@ -1,7 +1,7 @@
-#project 4 kdu5
-#task 1
-import csv
+# project 4 kdu5
+# Task 1: Calculate player ratings based on past matches.
 
+import csv
 
 def calculate_ratings(past_matches_filename):
     # Initialize dictionary to store player ratings
@@ -45,15 +45,9 @@ def calculate_ratings(past_matches_filename):
 
     return player_ratings
 
-# Example usage:
-# ratings = calculate_ratings('past_matches.csv')
-# print(ratings)
-
-#task 2
-
+# Task 2: Display player ratings in a bar chart.
 
 import matplotlib.pyplot as plt
-
 
 def display_ratings(player_ratings):
     # Extract player names and ratings from the dictionary
@@ -75,13 +69,9 @@ def display_ratings(player_ratings):
     # Save the plot to a PDF file
     plt.savefig('projections.pdf')
 
-# Example usage:
-# display_ratings(ratings)
-
-#task 3
+# Task 3: Simulate matches and project win probabilities.
 
 import numpy as np
-
 
 def simulate_match(player_ratings, player_a, player_b):
     # Calculate delta for Elo rating calculation
@@ -98,8 +88,6 @@ def simulate_match(player_ratings, player_a, player_b):
         return player_a
     else:
         return player_b
-
-
 
 def project_win_probs(player_ratings, n=100):
     # Initialize dictionary to store win probabilities for each player
@@ -129,17 +117,10 @@ def project_win_probs(player_ratings, n=100):
 
     return win_probabilities
 
-# Example usage:
-# player_ratings = calculate_ratings('past_matches.csv')
-# win_probs = project_win_probs(player_ratings)
-# print(win_probs)
-
-
-#task 4
+# Task 4: Display projected win probabilities in a pie chart.
 
 import csv
 import matplotlib.pyplot as plt
-
 
 def display_probs(win_probabilities):
     # Sort win probabilities in descending order
@@ -165,6 +146,3 @@ def display_probs(win_probabilities):
 
     # Show the pie chart
     plt.show()
-
-# Example usage:
-# display_probs(win_probs)
