@@ -2,45 +2,37 @@
 # Task 1: Calculate player ratings based on past matches.
 
 import csv
+import numpy as np
 
 def calculate_ratings(past_matches_filename):
-    # Initialize dictionary to store player ratings
-    player_ratings = {}
+    # Initialize list to store player ratings
+    player_ratings = [1500] * 8  # Initialize all players with a rating of 1500
 
-    # Initialize all players with a rating of 1500
-    initial_rating = 1500
+    # Constant for Elo rating calculation
+    c = 100
 
     try:
         with open(past_matches_filename, 'r') as file:
             # Read matches from CSV file
             matches_reader = csv.reader(file)
+            next(matches_reader)  # Skip header row
             for row in matches_reader:
-                # Extract player names from the match data
-                player_a, player_b = row[0], row[1]
-
-                # If player not already in dictionary, add with initial rating
-                if player_a not in player_ratings:
-                    player_ratings[player_a] = initial_rating
-                if player_b not in player_ratings:
-                    player_ratings[player_b] = initial_rating
-
-                # Calculate delta for Elo rating calculation
-                delta = (player_ratings[player_a] - player_ratings[player_b]) / 100
+                # Extract player indices from the match data
+                player_a_idx, player_b_idx = int(row[1]), int(row[2])
 
                 # Calculate probabilities of player A and B winning
-                delta = (player_ratings[player_a] - player_ratings[player_b]) / c
+                delta = (player_ratings[player_a_idx] - player_ratings[player_b_idx]) / c
                 prob_a_wins = 1 / (1 + np.exp(-delta))
                 prob_b_wins = 1 - prob_a_wins
 
-               # Update player ratings based on match outcome
-                outcome = row[2]
-                if outcome == 'A':
-                    player_ratings[player_a] += 5 * (1.0 - prob_a_wins)
-                    player_ratings[player_b] += 5 * (0.0 - prob_b_wins)
-                elif outcome == 'B':
-                    player_ratings[player_a] += 5 * (0.0 - prob_a_wins)
-                    player_ratings[player_b] += 5 * (1.0 - prob_b_wins)
-                    
+                # Update player ratings based on match outcome
+                winner_idx = int(row[3])
+                if winner_idx == player_a_idx:
+                    player_ratings[player_a_idx] += 5 * (1.0 - prob_a_wins)
+                    player_ratings[player_b_idx] += 5 * (0.0 - prob_b_wins)
+                elif winner_idx == player_b_idx:
+                    player_ratings[player_a_idx] += 5 * (0.0 - prob_a_wins)
+                    player_ratings[player_b_idx] += 5 * (1.0 - prob_b_wins)
     except Exception as e:
         print("Error:", e)
         print("Failed to read the input file.")
