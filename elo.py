@@ -17,7 +17,7 @@ def calculate_ratings(past_matches_filename):
             matches_reader = csv.reader(file)
             next(matches_reader)  # Skip header row
             for row in matches_reader:
-                # Extract player indices from the match data
+                # Extract player indices from the match data and convert to integers
                 player_a_idx, player_b_idx = int(row[1]), int(row[2])
 
                 # Calculate probabilities of player A and B winning
@@ -25,7 +25,7 @@ def calculate_ratings(past_matches_filename):
                 prob_a_wins = 1 / (1 + np.exp(-delta))
                 prob_b_wins = 1 - prob_a_wins
 
-                # Update player ratings based on match outcome
+                # Update player ratings based on match outcome and convert winner index to integer
                 winner_idx = int(row[3])
                 if winner_idx == player_a_idx:
                     player_ratings[player_a_idx] += 5 * (1.0 - prob_a_wins)
