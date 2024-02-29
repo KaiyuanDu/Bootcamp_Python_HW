@@ -32,13 +32,15 @@ def calculate_ratings(past_matches_filename):
                 prob_a_wins = 1 / (1 + np.exp(-delta))
                 prob_b_wins = 1 - prob_a_wins
 
-                # Update player ratings based on match outcome
-                if row[2] == 'A':
-                    player_ratings[player_a] += 32 * (1 - prob_a_wins)
-                    player_ratings[player_b] -= 32 * prob_b_wins
-                elif row[2] == 'B':
-                    player_ratings[player_a] -= 32 * prob_a_wins
-                    player_ratings[player_b] += 32 * (1 - prob_b_wins)
+               # Update player ratings based on match outcome
+                outcome = row[2]
+                if outcome == 'A':
+                    player_ratings[player_a] += 5 * (1.0 - prob_a_wins)
+                    player_ratings[player_b] += 5 * (0.0 - prob_b_wins)
+                elif outcome == 'B':
+                    player_ratings[player_a] += 5 * (0.0 - prob_a_wins)
+                    player_ratings[player_b] += 5 * (1.0 - prob_b_wins)
+                    
     except Exception as e:
         print("Error:", e)
         print("Failed to read the input file.")
