@@ -33,13 +33,13 @@ def calculate_ratings(past_matches_filename):
                 elif winner_idx == player_b_idx:
                     player_ratings[player_a_idx] += 5 * (0.0 - prob_a_wins)
                     player_ratings[player_b_idx] += 5 * (1.0 - prob_b_wins)
+                player_ratings = int(player_ratings)
     except Exception as e:
         print("Error:", e)
         print("Failed to read the input file.")
         return None
 
     return player_ratings
-
 
 # Task 2: Display player ratings in a bar chart.
 
