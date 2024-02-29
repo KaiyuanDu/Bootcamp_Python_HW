@@ -113,13 +113,6 @@ def project_win_probs(player_ratings, c=400, n=100):
 
     return win_probabilities
 
-
-
-# Task 4: Display projected win probabilities in a pie chart.
-
-import csv
-import matplotlib.pyplot as plt
-
 def display_probs(win_probabilities):
     # Sort win probabilities in descending order
     sorted_probs = sorted(win_probabilities.items(), key=lambda x: x[1], reverse=True)
