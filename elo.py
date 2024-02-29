@@ -45,6 +45,7 @@ def calculate_ratings(past_matches_filename):
 
     return player_ratings
 
+
 # Task 2: Display player ratings in a bar chart.
 
 import matplotlib.pyplot as plt
